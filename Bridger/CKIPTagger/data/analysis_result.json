@@ -1,0 +1,194 @@
+{
+  "sentence": "\n[心得] iPhone 15 使用心得\n這款iPhone 15真的很棒，拍照效果很好，特別是夜景模式。\n但是價格有點高，電池續航力還可以，沒有特別突出。\n整體來說，還是值得購買的。\n",
+  "segments": [
+    {
+      "word": "\n",
+      "pos": "WHITESPACE"
+    },
+    {
+      "word": "[",
+      "pos": "PARENTHESISCATEGORY"
+    },
+    {
+      "word": "心得",
+      "pos": "Na"
+    },
+    {
+      "word": "] iPhone 15",
+      "pos": "FW"
+    },
+    {
+      "word": " ",
+      "pos": "WHITESPACE"
+    },
+    {
+      "word": "使用",
+      "pos": "VC"
+    },
+    {
+      "word": "心得",
+      "pos": "Na"
+    },
+    {
+      "word": "\n",
+      "pos": "WHITESPACE"
+    },
+    {
+      "word": "這",
+      "pos": "Nep"
+    },
+    {
+      "word": "款",
+      "pos": "Nf"
+    },
+    {
+      "word": "iPhone 15",
+      "pos": "FW"
+    },
+    {
+      "word": "真的",
+      "pos": "D"
+    },
+    {
+      "word": "很",
+      "pos": "Dfa"
+    },
+    {
+      "word": "棒",
+      "pos": "VH"
+    },
+    {
+      "word": "，",
+      "pos": "COMMACATEGORY"
+    },
+    {
+      "word": "拍照效果",
+      "pos": "Na"
+    },
+    {
+      "word": "很",
+      "pos": "Dfa"
+    },
+    {
+      "word": "好",
+      "pos": "VH"
+    },
+    {
+      "word": "，",
+      "pos": "COMMACATEGORY"
+    },
+    {
+      "word": "特別",
+      "pos": "VH"
+    },
+    {
+      "word": "是",
+      "pos": "SHI"
+    },
+    {
+      "word": "夜景",
+      "pos": "Na"
+    },
+    {
+      "word": "模式",
+      "pos": "Na"
+    },
+    {
+      "word": "。",
+      "pos": "PERIODCATEGORY"
+    },
+    {
+      "word": "\n",
+      "pos": "WHITESPACE"
+    },
+    {
+      "word": "但是",
+      "pos": "Cbb"
+    },
+    {
+      "word": "價格",
+      "pos": "Na"
+    },
+    {
+      "word": "有點",
+      "pos": "Dfa"
+    },
+    {
+      "word": "高",
+      "pos": "VH"
+    },
+    {
+      "word": "，",
+      "pos": "COMMACATEGORY"
+    },
+    {
+      "word": "電池續航力",
+      "pos": "Na"
+    },
+    {
+      "word": "還可以",
+      "pos": "VH"
+    },
+    {
+      "word": "，",
+      "pos": "COMMACATEGORY"
+    },
+    {
+      "word": "沒有",
+      "pos": "D"
+    },
+    {
+      "word": "特別",
+      "pos": "VH"
+    },
+    {
+      "word": "突出",
+      "pos": "VH"
+    },
+    {
+      "word": "。",
+      "pos": "PERIODCATEGORY"
+    },
+    {
+      "word": "\n",
+      "pos": "WHITESPACE"
+    },
+    {
+      "word": "整體",
+      "pos": "Na"
+    },
+    {
+      "word": "來",
+      "pos": "D"
+    },
+    {
+      "word": "說",
+      "pos": "VE"
+    },
+    {
+      "word": "，",
+      "pos": "COMMACATEGORY"
+    },
+    {
+      "word": "還是",
+      "pos": "D"
+    },
+    {
+      "word": "值得",
+      "pos": "VH"
+    },
+    {
+      "word": "購買",
+      "pos": "VC"
+    },
+    {
+      "word": "的",
+      "pos": "DE"
+    },
+    {
+      "word": "。\n",
+      "pos": "Na"
+    }
+  ],
+  "entities": []
+}

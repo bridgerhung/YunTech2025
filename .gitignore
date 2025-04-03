@@ -1,0 +1,55 @@
+# 注意：.gitignore 文件中使用 # 作為註釋符號
+
+# 忽略大型模型檔案 (此項移到最上方，確保最廣泛的匹配優先)
+*.safetensors
+*.pt
+*.bin
+*.h5
+*.onnx
+*.pb
+*.tflite
+*.mlmodel
+
+# 特定的大型檔案
+Bridger/TaiwanBERT/fine_tuned_taiwanbert/*.safetensors
+Bridger/TaiwanBERT/results/checkpoint-*/*.safetensors
+Bridger/TaiwanBERT/results/checkpoint-*/*.pt
+
+# CKIPTagger 大型檔案
+Bridger/CKIPTagger/data/data/model_pos/*.data-*
+Bridger/CKIPTagger/data/data/model_ws/*.data-*
+Bridger/CKIPTagger/data/data/embedding_word/*.npy
+Bridger/CKIPTagger/data/data/model_ner/*.data-*
+
+# Common Python files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
