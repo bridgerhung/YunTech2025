@@ -22,41 +22,31 @@ def cloud(kwGetter, decoder):
     cloudmader.generate_wordcloud(fq, mask_path='meatballSpaghetii/integration/resource/goblin.jpg', font_path ='meatballSpaghetii/integration/resource/Iansui/Iansui-Regular.ttf')
 
 def summerize(kwGetter, decoder, key):
-    text = decoder.makeSentence()
-    commentKeys = getKeyword(kwGetter, text, False)
+    text =decoder.makeSentence()
+    commentKeys= getKeyword(kwGetter, text, False)
     sentences = [list(jieba.cut(sent)) for sent in text.split("\n")]
     co_occurrence = kwGetter.calculate_co_occurrence(sentences, commentKeys)
 
-    # Calculate sentence relevance scores based on keyword frequency
-    sentence_scores = []
-    for i, sent in enumerate(sentences):
-        joined_sent = ''.join(sent)
-        # Count occurrence of keywords in sentence
-        keyword_count = sum(keyword in joined_sent for keyword in commentKeys)
-        # Count co-occurrence pairs in sentence
-        cooccur_count = sum(1 for c in co_occurrence.items() 
-                           if c[0][0] in joined_sent and c[0][1] in joined_sent)
-        # Calculate combined score (weight can be adjusted)
-        score = keyword_count + (cooccur_count * 2)  # Give more weight to co-occurrence
-        sentence_scores.append((i, score, joined_sent))
-    
-    # Sort sentences by score in descending order and take the top N most relevant
-    sorted_sentences = sorted(sentence_scores, key=lambda x: x[1], reverse=True)
-    top_sentences = [s[2] for s in sorted_sentences[:min(20, len(sorted_sentences))]]
-    
-    # Filter out very short sentences or sentences without meaningful content
-    filtered_sentences = [s for s in top_sentences if len(s) > 10]
-    
-    # Combine sentences into a well-structured text
-    list_selected = "\n".join(filtered_sentences)
-    
-    summer = summerizer()
+    # 輸出共現分析結果
+    #print('\n================共現分析=================')
+    #print(sorted(co_occurrence.items(), key=lambda x: x[1], reverse=True)[:10])
+    list_selected = [''.join(s) for s in sentences if any(c[0][0] in ''.join(s) and c[0][1] in ''.join(s) for c in co_occurrence.items())]
+    for i in list_selected:
+        #print(i, end ="\n\n")
+        pass
+    summer =summerizer()
     summer.sum(list_selected, key)
+    
 
+
+
+    
 decoder = decodeJson()
 kwGetter =keywordGetter()
 text =input("你想要找甚麼: ")
 key=getKeyword(kwGetter, text, True)
+
+
 
 print("="*50)
 search(decoder, key)
