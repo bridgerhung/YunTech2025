@@ -10,7 +10,7 @@ class decodeJson:
         self.reviews = []  # 存下來過濾後的評論清單
 
     def readFile(self):
-        folderPath = 'schoolProject/xxSearchCrawler/output_comments'
+        folderPath = 'schoolProject/xxSearchCrawler/pchome'
         for filename in os.listdir(folderPath):
             if filename.endswith(".json"):
                 filePath = os.path.join(folderPath, filename)

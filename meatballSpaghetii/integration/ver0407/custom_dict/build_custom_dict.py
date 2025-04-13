@@ -198,7 +198,7 @@ if __name__ == "__main__":
     dict_builder = ECommerceDict()
     
     # 處理所有評論JSON檔案
-    json_dir = "/home/user/YunTech2025/schoolProject/xxSearchCrawler/output_comments"
+    json_dir = "/home/user/YunTech2025/schoolProject/xxSearchCrawler/pchome"
     dict_builder.load_all_json_files(json_dir)
     
     # 生成自定義詞典和停用詞表

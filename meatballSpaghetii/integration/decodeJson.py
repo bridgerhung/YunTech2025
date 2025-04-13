@@ -9,7 +9,7 @@ class decodeJson:
         self.datas =[]
         self.reviewData =[]
     def readFile(self):
-        folderPath = 'schoolProject/xxSearchCrawler/output_comments'
+        folderPath = 'schoolProject/xxSearchCrawler/pchome'
 
         for filename in os.listdir(folderPath):
             filePath = os.path.join(folderPath, filename)
