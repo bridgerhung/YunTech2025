@@ -78,8 +78,10 @@ class PchomeSpider(scrapy.Spider):
         if (response.status != 200):
             self.logger.warning(f"Request blocked with {response.status}: {response.url}")
             return
+
         meta = response.meta
         totalComments = response.json()['Total']  # 總評論數
+
         if totalComments == 0:  # 沒有評論直接返回
             return
         totalPage = response.json()['TotalPages']  # 總頁數
@@ -118,4 +120,4 @@ class PchomeSpider(scrapy.Spider):
         startTime = time.time()
         for url in self.start_urls:
             yield scrapy.Request(url=url, callback=self.productsParse)
-        print("爬蟲用時: "+ str(time.time()-startTime)  + "秒")
+        print("pchome爬蟲用時: "+ str(time.time()-startTime)  + "秒")

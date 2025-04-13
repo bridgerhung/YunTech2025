@@ -17,7 +17,8 @@ class XxsearchcrawlerPipeline:
 
     # 爬蟲開始時，建立資料夾 (會自動執行)
     def open_spider(self, spider):
-        self.outputDir = "output_comments"
+
+        self.outputDir = f"new_output_comments/{spider.name}"
         os.makedirs(self.outputDir, exist_ok=True)
 
     # 爬蟲執行時，將資料存入self.files[對應的path] (使用yeild後 會將資料傳至這裡 進行處理)
