@@ -8,8 +8,8 @@ class keywordGetter:
     keys =[]
     def __init__(self):
         pass
-   
-    def extract_keywords(self, text, topk=25, dict_path='meatballSpaghetii/integration/resource/dict (1).txt', stop_path='meatballSpaghetii/integration/resource/stopwords (1).txt', modelMode=False):
+        #替換為自己訓練的模型
+    def extract_keywords(self, text, topk=25, dict_path='meatballSpaghetii/integration/ver0407/custom_dict/ecommerce_dict.txt', stop_path='meatballSpaghetii/integration/ver0407/custom_dict/ecommerce_stopwords.txt', modelMode=False):
         if dict_path:
             jieba.set_dictionary(dict_path)
         if stop_path:

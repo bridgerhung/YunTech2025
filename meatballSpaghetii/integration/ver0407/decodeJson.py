@@ -39,12 +39,23 @@ class decodeJson:
 
     def clean_html_tags(self, text):
         return re.sub(r'<.*?>', '', text)
-
+        
+    def separate_review_from_product(self, text): #名琮
+        """分離評論和產品名稱"""
+        if not text:
+            return ""
+            
+        # 使用冒號分割評論和產品名稱
+        parts = text.split(':', 1)
+        if len(parts) > 1:
+            return parts[0].strip()  # 只返回冒號前的評論部分
+        return text.strip()
 
     def containKeywords(self, keywords, str):
-        contained =True
+        contained = True
         for i in keywords:
-            if i.lower() not in str.lower(): contained =False
+            if i.lower() not in str.lower(): 
+                contained = False
         return contained
     
     def search_reviews(self, keyword):
@@ -56,14 +67,16 @@ class decodeJson:
             if self.containKeywords(keyword, review["產品名稱"]):
                 
                 self.reviews.append(review)
-                self.text += "\n" + (review['評論'] if review["評論"] is not '' else '')  + ":" +review["產品名稱"]
+                # 只添加評論內容，不包括產品名稱 : 名琮
+                if review['評論']:
+                    self.text += "\n" + review['評論']
                 
         print(self.text)
         return self.reviews  # 回傳 list
 
     def makeSentence(self):
-        return self.text
-
-
-
-  # 返回過濾後的評論資料框
+        """返回純評論文本，不包含產品名稱"""
+        # 確保返回的文本不包含產品名稱
+        lines = self.text.split('\n')
+        clean_lines = [self.separate_review_from_product(line) for line in lines]
+        return '\n'.join(clean_lines)
