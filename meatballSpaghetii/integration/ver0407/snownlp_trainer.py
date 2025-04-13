@@ -245,7 +245,7 @@ if __name__ == "__main__":
     trainer = SentimentTrainer()
     
     # 設置訓練數據目錄
-    json_dir = "/home/user/YunTech2025/schoolProject/xxSearchCrawler/pchome"
+    json_dir = "/home/user/YunTech2025/schoolProject/xxSearchCrawler/output_comments"
     
     # 執行完整訓練流程
     result = trainer.run_full_training(json_dir, use_auto_labeling=True)
