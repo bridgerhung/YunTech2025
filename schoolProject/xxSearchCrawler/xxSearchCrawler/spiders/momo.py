@@ -1,3 +1,4 @@
+
 import json
 import scrapy
 from scrapy.http import JsonRequest
@@ -5,6 +6,10 @@ from scrapy import FormRequest
 from xxSearchCrawler.items import XxsearchcrawlerItem
 
 class MomoSpider(scrapy.Spider):
+    """
+    momo爬蟲
+    包含momo 3C商品清單爬取功能、momo 3C商品評論爬取功能
+    """
     name = "momo"
     allowed_domains = ["momoshop.com.tw"]
     productsUrl = "https://www.momoshop.com.tw/ajax/ajaxTool.jsp?n=2022&t=1744385549330"
@@ -39,11 +44,13 @@ class MomoSpider(scrapy.Spider):
         "4301800000", "4302200000", "4302000000", "4302500000", "4302300000", "4302600000",
         "4303700000", "4303800000", "4303900000", "4304000000", "4304100000", "4304200000"
     ]
-    # 必須重新定義start_request , 因為要發送post請求
+
     def start_requests(self):
+        """
+        scrapy中發送請求會執行的方法, 預設為發送GET請求, 重新定義為發送POST請求
+        """
 
-        for code in self.cateCodeList:
-
+        for code in self.cateCodeList: # 向3C子類別的商品清單發送請求，並交由productParse處理
             data = {"flag": 2022,
                     "data": {"params": {
                         "cateCode": f"{code}", "cateLevel": "1", "cp": "N", "NAM": "N", "normal": "N"
@@ -51,26 +58,35 @@ class MomoSpider(scrapy.Spider):
                         "stockYN": "N", "prefere": "N", "threeHours": "N", "video": "N", "cycle": "N", "cod": "N",
                         "superstorePay": "N", "curPage": "1", "priceS": "0", "priceE": "9999999", "brandName": [],
                         "searchType": "6"}}}
+
+            # 讓發送請求時的formData符合伺服器要求
             dataJson = json.dumps(data)
             body = {
                 'data': dataJson
             }
+
             yield FormRequest(url=self.productsUrl,method='POST',formdata=body,
                               headers=self.headers,callback=self.productParse, meta={'formData': data, 'cateId': code})
 
     def productParse(self, response):
+        """
+        處理商品清單的方法
+        參數:
+            response:某個3C子類別的商品清單
+        yield:
+            JsonRequest:發送請求給商品評論網址
+            FromRequest:發送換頁請求給當前網址
+        """
         try:
             if response.status == 200:
-
                 goodsCodeList = []
                 res = response.json()
-
                 maxPage = res["rtnData"]["searchResult"]['rtnSearchData']["maxPage"]
                 curPage = res['rtnData']['searchResult']['rtnSearchData']['currentPage']
                 productList = res['rtnData']['searchResult']['rtnSearchData']['goodsInfoList']
-
                 data = response.meta['formData']
                 data['data']['params']['curPage'] = str(int(curPage) + 1)
+
                 dataJson = json.dumps(data)
                 formData = {
                     'data': dataJson,
@@ -93,10 +109,7 @@ class MomoSpider(scrapy.Spider):
                 describe -> 爬蟲資料.goodsSubName
                 '''
 
-
-
-
-                for product in productList:
+                for product in productList: # 將商品清單中抓到的商品資訊，交由commentParse處理 -> (抓一筆 處理一筆)
                     title = product['goodsName']
                     goodsCode = product['goodsCode']
                     price = product['goodsPrice']
@@ -104,7 +117,7 @@ class MomoSpider(scrapy.Spider):
                     cateId = response.meta['cateId']
                     spec = "N/A"
                     describe = product['goodsSubName']
-                    print(f"{'='*50}/n商品代碼:{goodsCode}/n{'='*50}")
+
 
                     body = {
                         'host': 'momoshop',
@@ -128,7 +141,7 @@ class MomoSpider(scrapy.Spider):
                                             "comments": [],
                                             "curPage": 1
                                             })
-                if curPage < maxPage:
+                if curPage < maxPage: # 若還沒抓到所有商品資訊(不包括評論)，則發送換頁請求
                     yield FormRequest(url=self.productsUrl, method='POST', formdata=formData,
                                       headers=self.headers, callback=self.productParse,
                                       meta={'formData': data, 'cateId': response.meta['cateId']})
@@ -139,15 +152,27 @@ class MomoSpider(scrapy.Spider):
                 print(f"status code:{response.status}")
 
         except Exception as e:
+            '''
+            todo:指定例外處理
+            '''
             print("發生錯誤: ", e)
 
 
     def commentParse(self, response):
+        """
+        處理商品評論的方法
+        參數:
+            response:某個產品的評論清單
+        yield:
+            JsonRequest:發送換頁請求給商品評論網址
+            item:將此商品的所有設定好的資訊，交給pipeline進行處理
+        """
         if (response.status == 200):
 
             maxPage = response.json()['maxPage']
             nextPage = response.meta['curPage'] +1
-            if (maxPage > 0):
+
+            if (maxPage > 0): # 如果有頁數就裝填評論
                 comments = response.json()['goodsCommentList']
                 for comment in comments:
                     response.meta['comments'].append({
@@ -157,7 +182,7 @@ class MomoSpider(scrapy.Spider):
                         'date': comment['date'],
                     })
 
-            if nextPage <= maxPage:
+            if nextPage <= maxPage: # 如果還沒拿到所有評論，就發送換頁請求
                 body = {
                     'host':'web',
                     'curPage':nextPage,
@@ -169,23 +194,9 @@ class MomoSpider(scrapy.Spider):
                 yield JsonRequest(url=self.commentsUrl, data=body,
                                   callback=self.commentParse,
                                   meta=response.meta)
-            else:
-                '''
-                todo: 將資料儲存至設定好的item欄位 傳至pipeline做處理
-                # 商品評論的資料欄位
-                productName -> response.meta['title']
-                comments -> comment['comment']
-                star -> comment['score']
-                date -> comment.['date']
-                
-                title -> 爬蟲資料.goodsName
-                productId -> 爬蟲資料.goodsCode
-                price -> 爬蟲資料.goodsPrice
-                platform -> momo
-                cateId -> meta['cateId']
-                spec -> null
-                describe -> 爬蟲資料.goodsSubName
-                '''
+
+            else: # 否則，將商品資料傳至pipeline處理
+
                 print(response.meta)
                 item = XxsearchcrawlerItem()
                 item['title'] = response.meta['title']
@@ -199,4 +210,7 @@ class MomoSpider(scrapy.Spider):
 
                 yield item
         else:
+            '''
+            todo:連線無效處理
+            '''
             pass
