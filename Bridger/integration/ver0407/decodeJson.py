@@ -24,7 +24,7 @@ class decodeJson:
         
     def _load_original_data(self):
         """載入原始資料集"""
-        folderPath = 'schoolProject/xxSearchCrawler/output_comments'
+        folderPath = 'schoolProject/xxSearchCrawler/output_comments/pchome'
         if not os.path.exists(folderPath):
             print(f"警告：舊資料集路徑不存在: {folderPath}")
             return
@@ -48,7 +48,7 @@ class decodeJson:
             
     def _load_momo_data(self):
         """載入 momo 資料集"""
-        folderPath = 'schoolProject/xxSearchCrawler/new_output_comments/momo'
+        folderPath = 'schoolProject/xxSearchCrawler/output_comments/momo'
         if not os.path.exists(folderPath):
             print(f"警告：momo 資料集路徑不存在: {folderPath}")
             return
