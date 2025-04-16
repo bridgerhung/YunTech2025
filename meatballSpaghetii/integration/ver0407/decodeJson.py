@@ -10,7 +10,7 @@ class decodeJson:
         self.reviews = []  # 存下來過濾後的評論清單
 
     def readFile(self):
-        folderPath = 'schoolProject/xxSearchCrawler/output_comments'
+        folderPath = 'schoolProject/xxSearchCrawler/output_comments/pchome'
         for filename in os.listdir(folderPath):
             if filename.endswith(".json"):
                 filePath = os.path.join(folderPath, filename)
@@ -64,7 +64,7 @@ class decodeJson:
         self.text = ""
 
         for review in all_reviews:
-            if self.containKeywords(keyword, review["產品名稱"]):
+            if self.containKeywords(keyword, review["產品名稱"]) or self.containKeywords(keyword, review["評論"]):
                 
                 self.reviews.append(review)
                 # 只添加評論內容，不包括產品名稱 : 名琮

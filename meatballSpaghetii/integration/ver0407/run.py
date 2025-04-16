@@ -47,13 +47,18 @@ def summerize(kwGetter, decoder, key):
     summer = summerizer()
     summer.sum(list_selected, key)
 
-decoder = decodeJson()
-kwGetter = keywordGetter()
-text = input("你想要找甚麼: ")
-key = getKeyword(kwGetter, text, True)
 
-print("="*50)
-search(decoder, key)
-summerize(kwGetter, decoder, key)
+try:
+    decoder = decodeJson()
+    kwGetter = keywordGetter()
+    text = input("你想要找甚麼: ")
+    key = getKeyword(kwGetter, text, True)
 
-cloud(kwGetter, decoder)
+    print("="*50)
+    search(decoder, key)
+    summerize(kwGetter, decoder, key)
+
+    cloud(kwGetter, decoder)
+except Exception as e:
+    print ("發生錯誤", e)
+

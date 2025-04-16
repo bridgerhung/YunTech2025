@@ -14,10 +14,6 @@ class keywordGetter:
             jieba.set_dictionary(dict_path)
         if stop_path:
             jieba.analyse.set_stop_words(stop_path)
-        if modelMode:
-            parts = re.findall(r'[a-zA-Z]+|\d+', text)
-            if len(parts) >= 2:
-                text += " " + " ".join(parts)  # 把英數加進原始 text
         keys=jieba.analyse.extract_tags(text, topK=topk)
         return keys
 
