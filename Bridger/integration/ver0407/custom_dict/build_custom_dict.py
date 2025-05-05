@@ -202,5 +202,5 @@ if __name__ == "__main__":
     dict_builder.load_all_json_files(json_dir)
     
     # 生成自定義詞典和停用詞表
-    dict_builder.generate_custom_dict("/home/user/YunTech2025/Bridger/integration/ver0407/custom_dict/ecommerce_dict.txt")
-    dict_builder.generate_stopwords("/home/user/YunTech2025/Bridger/integration/ver0407/custom_dict/ecommerce_stopwords.txt")
+    dict_builder.generate_custom_dict("/home/user/YunTech2025/meatballSpaghetii/integration/ver0407/custom_dict/ecommerce_dict.txt")
+    dict_builder.generate_stopwords("/home/user/YunTech2025/meatballSpaghetii/integration/ver0407/custom_dict/ecommerce_stopwords.txt")
